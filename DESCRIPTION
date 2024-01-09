@@ -1,0 +1,20 @@
+Package: mici
+Type: Package
+Title: Multiple Imputation for Competing Risks Analysis
+Version: 0.1.0
+Authors@R: 
+    person(given = "Elizabeth",
+           middle = "C",
+           family = "Chase",
+           role = c("aut", "cre"),
+           email = "ecchase@umich.edu",
+           comment = c(ORCID = "0000-0003-0452-2976"))
+Description: mici uses nonparametric multiple imputation to estimate the cumulative incidence.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr,
+    binom,
+    survival
+RoxygenNote: 7.2.3
