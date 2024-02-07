@@ -157,12 +157,14 @@ mici.impute <- function(ftime = NULL,
         } 
       }
       last_event <- max(u$ftime[u$ftype==1])
-      last_cens <- unique(ipd$ftime[ipd$ftype==0])
-      if (last_cens <= last_event){
-        ipd$ftype[ipd$ftype==0] <- resample(u$ftype[u$ftime==last_event & u$ftype!=0], 
-                                            size = length(which(ipd$ftype==0)), replace = TRUE)
-      } else{
-        ipd$ftype[ipd$ftype==0] <- NA
+      last_cens <- max(ipd$ftime[ipd$ftype==0])
+      if (length(last_cens)>0){
+        if (last_cens <= last_event){
+          ipd$ftype[ipd$ftype==0] <- resample(u$ftype[u$ftime==last_event & u$ftype!=0], 
+                                              size = length(which(ipd$ftype==0)), replace = TRUE)
+        } else{
+          ipd$ftype[ipd$ftype==0] <- NA
+        }
       }
     
       ipd <- ipd %>% arrange(id) %>% select(-id)
