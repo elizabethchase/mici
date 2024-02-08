@@ -162,9 +162,7 @@ mici.impute <- function(ftime = NULL,
         if (last_cens <= last_event){
           ipd$ftype[ipd$ftype==0] <- resample(u$ftype[u$ftime==last_event & u$ftype!=0], 
                                               size = length(which(ipd$ftype==0)), replace = TRUE)
-        } else{
-          ipd$ftype[ipd$ftype==0] <- NA
-        }
+        } 
       }
     
       ipd <- ipd %>% arrange(id) %>% select(-id)
