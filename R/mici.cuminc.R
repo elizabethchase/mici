@@ -89,7 +89,6 @@ mici.cuminc <- function(imp_obj = NULL,
   if (int.type == "Bayes" & bayes_alpha <= 0){stop("bayes_alpha must be greater than 0.")}
   if (int.type == "Bayes" & bayes_beta <= 0){stop("bayes_beta must be greater than 0.")}
   if (int.type == "Bayes" & bayes_samps <= 0){stop("bayes_samps must be greater than 0.")}
-  if (int.type == "Bayes" & !is.integer(bayes_samps)){stop("bayes_samps must be an integer.")}
   
   if (is.null(times)){
     times <- sort(unique(imp_obj[[1]]$time[imp_obj[[1]]$type != 0]))
