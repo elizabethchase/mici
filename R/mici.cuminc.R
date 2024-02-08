@@ -75,20 +75,21 @@ mici.cuminc <- function(imp_obj = NULL,
   if (is.null(imp_obj)){stop("You must input the output from mici.impute as imp_obj!")}
   
   event_types <- unique(imp_obj[[1]]$ftype)
-  if (0 %in% event_types){stop("This method can only be used on data that are free of censoring or imputed
-                               to be free of censoring.")}
+  if (0 %in% event_types){warning("These data still contain censoring: this is only sensible if the remaining
+                                  censoring is after the last observed event time or if the original data only
+                                  contained censored observations.")}
   
-  if (event_interest %notin% event_types){stop("The event of interest indicator (event_interest) does not
+  if (event_interest %notin% event_types){warning("The event of interest indicator (event_interest) does not
                                                appear in the observed data.")}
   
   if (conf.width >= 1 | conf.width <= 0){stop("conf.width must be a number between 0 and 1!")}
   
   crit_value <- qnorm((1 + conf.width)/2)
   
-  if (int.type == "Bayes" & bayes_alpha <= 0){"bayes_alpha must be greater than 0."}
-  if (int.type == "Bayes" & bayes_beta <= 0){"bayes_beta must be greater than 0."}
-  if (int.type == "Bayes" & bayes_samps <= 0){"bayes_samps must be greater than 0."}
-  if (int.type == "Bayes" & !is.integer(bayes_samps)){"bayes_samps must be an integer."}
+  if (int.type == "Bayes" & bayes_alpha <= 0){stop("bayes_alpha must be greater than 0.")}
+  if (int.type == "Bayes" & bayes_beta <= 0){stop("bayes_beta must be greater than 0.")}
+  if (int.type == "Bayes" & bayes_samps <= 0){stop("bayes_samps must be greater than 0.")}
+  if (int.type == "Bayes" & !is.integer(bayes_samps)){stop("bayes_samps must be an integer.")}
   
   if (is.null(times)){
     times <- sort(unique(imp_obj[[1]]$time[imp_obj[[1]]$type != 0]))

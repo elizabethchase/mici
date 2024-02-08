@@ -79,9 +79,21 @@ mici.impute <- function(ftime = NULL,
   dd <- u[u$ftype == 0, ] ##cases that need imputation
   
   if (nrow(dd)==nrow(u)){
-    stop("All observations in this dataset are censored; imputation
+    warning("All observations in this dataset are censored; imputation
          cannot be performed.")
+    ipd <- select(u, -id)
+    myimps <- list(ipd)
+    
+    return(myimps)
   }
+  
+  if (length(which(u$ftype==1))==0){
+    warning("The event-of-interest does not appear in these data.")
+    last_event <- -Inf
+  } else{
+    last_event <- max(u$ftime[u$ftype==1])
+  }
+  
   if (nrow(dc)==nrow(u)){
     warning("There was no censoring in this dataset. 
             Imputation was not needed.")
@@ -156,7 +168,6 @@ mici.impute <- function(ftime = NULL,
           ipd[near(ipd$ftime, xt[jj]) & ipd$ftype==0,c("ftime", "ftype")] <- ipd[inds,c("ftime", "ftype")]
         } 
       }
-      last_event <- max(u$ftime[u$ftype==1])
       if (length(which(ipd$ftype==0))>0){
         last_cens <- max(ipd$ftime[ipd$ftype==0])
       } else{
