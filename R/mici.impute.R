@@ -108,7 +108,7 @@ mici.impute <- function(ftime = NULL,
   myimps <- list()
   
   if (scheme=="KMI"){
-    g <- summary(survfit(Surv(ftime, ftype != 0) ~ 1, data = u))
+    g <- summary(survfit(Surv(ftime, ftype != 0) ~ 1, data = u, timefix = FALSE))
     gm <- g$surv[length(g$surv)]
     w <- g$time
     wp <- -diff(c(1, g$surv))
